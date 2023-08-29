@@ -35,7 +35,7 @@ public class Indirizzo {
     private String localita;
 
     @Column(nullable = false)
-    private Integer cap;
+    private String cap;
 
     @OneToOne
     private Comune comune;

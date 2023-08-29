@@ -1,5 +1,6 @@
 package com.epicenergy.service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.epicenergy.entity.ERole;
 import com.epicenergy.entity.Role;
 import com.epicenergy.entity.User;
+import com.epicenergy.enums.RagioneSociale;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.payload.LoginDto;
 import com.epicenergy.payload.RegisterDto;
@@ -57,16 +59,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(RegisterDto registerDto) {
+    public User register(RegisterDto registerDto) {
 
         // add check for username exists in database
         if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username already exists!");
         }
 
         // add check for email exists in database
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email already exists!");
         }
 
         User user = new User();
@@ -75,24 +77,31 @@ public class AuthServiceImpl implements AuthService {
         user.setUsername(registerDto.getUsername());
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setDataInserimento(LocalDateTime.now());
+        user.setDataUltimoContatto(null);
+        user.setTelefono(registerDto.getTelefono());
+        user.setIndirizzo(registerDto.getIndirizzo());
+        user.setRagioneSociale(RagioneSociale.valueOf(registerDto.getRagioneSociale().toString()));
 
+        // optional fields
+        user.setPartitaIva(registerDto.getPartitaIva());
+        user.setFatturatoAnnuale(registerDto.getFatturatoAnnuale());
+        user.setPec(registerDto.getPec());
+        user.setEmailContatto(registerDto.getEmailContatto());
+        user.setNomeContatto(registerDto.getNomeContatto());
+        user.setCognomeContatto(registerDto.getCognomeContatto());
+        user.setTelefonoContatto(registerDto.getTelefonoContatto());
+
+        // user role default
         Set<Role> roles = new HashSet<>();
-
-        if (registerDto.getRoles() != null) {
-            registerDto.getRoles().forEach(role -> {
-                Role userRole = roleRepository.findByRoleName(getRole(role)).get();
-                roles.add(userRole);
-            });
-        } else {
-            Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
-            roles.add(userRole);
-        }
+        Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
+        roles.add(userRole);
 
         user.setRoles(roles);
         System.out.println(user);
         userRepository.save(user);
 
-        return "User registered successfully!.";
+        return user;
     }
 
     public ERole getRole(String role) {

@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.epicenergy.service.AuthService;
+import com.epicenergy.entity.User;
 import com.epicenergy.payload.JWTAuthResponse;
 import com.epicenergy.payload.LoginDto;
 import com.epicenergy.payload.RegisterDto;
-
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,11 +23,10 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // Build Login REST API
-    @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
-           	
-    	String token = authService.login(loginDto);
+    @PostMapping("/login")
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto) {
+
+        String token = authService.login(loginDto);
 
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
         jwtAuthResponse.setUsername(loginDto.getUsername());
@@ -38,20 +35,9 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthResponse);
     }
 
-    // Build Register REST API
-    @PostMapping(value = {"/register", "/signup"})
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        String response = authService.register(registerDto);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody RegisterDto registerDto) {
+        User user = authService.register(registerDto);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
-    
-    // JSON inviato dal Client
-    /*{
-        "name": "Giuseppe",
-        "lastname": "Verdi",
-        "username": "giuseppevardi",
-        "email": "g.verdi@example.com",
-        "password": "qwerty",
-        "roles": ["MODERATOR", "ADMIN"]
-    }*/
 }

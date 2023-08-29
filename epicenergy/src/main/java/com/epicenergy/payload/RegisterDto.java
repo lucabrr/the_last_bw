@@ -1,6 +1,7 @@
 package com.epicenergy.payload;
 
-import java.util.Set;
+import com.epicenergy.entity.Indirizzo;
+import com.epicenergy.enums.RagioneSociale;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,14 @@ public class RegisterDto {
     private String username;
     private String email;
     private String password;
-    private Set<String> roles;
+    private RagioneSociale ragioneSociale;
+    private String partitaIva;
+    private String telefono;
+    private Double fatturatoAnnuale;
+    private String pec;
+    private String emailContatto;
+    private String nomeContatto;
+    private String cognomeContatto;
+    private String telefonoContatto;
+    private Indirizzo indirizzo;
 }

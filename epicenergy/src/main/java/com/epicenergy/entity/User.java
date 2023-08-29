@@ -45,16 +45,15 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private RagioneSociale ragioneSociale;
 
-    @Column(nullable = false)
     private String partitaIva;
 
     private LocalDateTime dataInserimento;
 
     private LocalDateTime dataUltimoContatto;
 
-    @Column(nullable = false)
     private Double fatturatoAnnuale;
 
     @Column(unique = true)
