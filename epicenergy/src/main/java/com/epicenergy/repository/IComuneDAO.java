@@ -7,6 +7,8 @@ import com.epicenergy.entity.Comune;
 
 public interface IComuneDAO extends CrudRepository<Comune, Long> {
 
-    @Query("SELECT c FROM Comune c WHERE c.nome = :nome AND c.provincia.nome = :provName")
-    public Comune findByNomeAndProvName(String nome, String provName);
+    @Query("SELECT c FROM Comune c JOIN c.provincia cp WHERE c.nome = :nome AND cp.sigla = :provSigla")
+    public Comune findByNomeAndProvSigla(String nome, String provSigla);
+
+    public Comune findByNome(String nome);
 }

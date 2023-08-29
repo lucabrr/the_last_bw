@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.epicenergy.entity.Comune;
 import com.epicenergy.entity.ERole;
 import com.epicenergy.entity.Indirizzo;
-import com.epicenergy.entity.Provincia;
 import com.epicenergy.entity.Role;
 import com.epicenergy.entity.User;
 import com.epicenergy.enums.RagioneSociale;
@@ -97,15 +96,24 @@ public class AuthServiceImpl implements AuthService {
         user.setRagioneSociale(RagioneSociale.valueOf(registerDto.getRagioneSociale().toString()));
 
         Indirizzo ind = new Indirizzo();
-        Comune com = com_dao.findByNomeAndProvName(registerDto.getIndirizzo().getComune().getNome(),
-                registerDto.getIndirizzo().getComune().getProvincia().getNome());
+        Comune com = com_dao.findByNome(registerDto.getIndirizzo().getComune().getNome());
         ind.setVia(registerDto.getIndirizzo().getVia());
         ind.setCivico(registerDto.getIndirizzo().getCivico());
         ind.setLocalita(registerDto.getIndirizzo().getLocalita());
         ind.setCap(registerDto.getIndirizzo().getCap());
         ind.setComune(com);
-        ind_dao.save(ind);
-        user.setIndirizzo(ind);
+
+        if (ind.getComune() != null) {
+            ind_dao.save(ind);
+            user.setIndirizzo(ind);
+        } else {
+            // per testing
+            System.out.println("Input Comune nome " + registerDto.getIndirizzo().getComune().getNome());
+            System.out
+                    .println("Input Provincia sigla "
+                            + registerDto.getIndirizzo().getComune().getProvincia().getSigla());
+            System.out.println("Query Comune nome " + com.getNome());
+        }
 
         // optional fields
         user.setPartitaIva(registerDto.getPartitaIva());
@@ -122,7 +130,7 @@ public class AuthServiceImpl implements AuthService {
         roles.add(userRole);
 
         user.setRoles(roles);
-        System.out.println(user);
+        // System.out.println(user);
         userRepository.save(user);
 
         return user;
