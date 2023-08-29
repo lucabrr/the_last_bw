@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,19 +13,32 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.epicenergy.entity.Comune;
 import com.epicenergy.entity.ERole;
+import com.epicenergy.entity.Indirizzo;
+import com.epicenergy.entity.Provincia;
 import com.epicenergy.entity.Role;
 import com.epicenergy.entity.User;
 import com.epicenergy.enums.RagioneSociale;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.payload.LoginDto;
 import com.epicenergy.payload.RegisterDto;
+import com.epicenergy.repository.IComuneDAO;
+import com.epicenergy.repository.IProvinciaDao;
+import com.epicenergy.repository.IndirizzoRepository;
 import com.epicenergy.repository.RoleRepository;
 import com.epicenergy.repository.UserRepository;
 import com.epicenergy.security.JwtTokenProvider;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    @Autowired
+    IProvinciaDao prov_dao;
+    @Autowired
+    IComuneDAO com_dao;
+    @Autowired
+    IndirizzoRepository ind_dao;
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -80,8 +94,18 @@ public class AuthServiceImpl implements AuthService {
         user.setDataInserimento(LocalDateTime.now());
         user.setDataUltimoContatto(null);
         user.setTelefono(registerDto.getTelefono());
-        user.setIndirizzo(registerDto.getIndirizzo());
         user.setRagioneSociale(RagioneSociale.valueOf(registerDto.getRagioneSociale().toString()));
+
+        Indirizzo ind = new Indirizzo();
+        Comune com = com_dao.findByNomeAndProvName(registerDto.getIndirizzo().getComune().getNome(),
+                registerDto.getIndirizzo().getComune().getProvincia().getNome());
+        ind.setVia(registerDto.getIndirizzo().getVia());
+        ind.setCivico(registerDto.getIndirizzo().getCivico());
+        ind.setLocalita(registerDto.getIndirizzo().getLocalita());
+        ind.setCap(registerDto.getIndirizzo().getCap());
+        ind.setComune(com);
+        ind_dao.save(ind);
+        user.setIndirizzo(ind);
 
         // optional fields
         user.setPartitaIva(registerDto.getPartitaIva());
