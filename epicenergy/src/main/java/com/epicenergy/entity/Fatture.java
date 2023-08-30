@@ -3,8 +3,12 @@ package com.epicenergy.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.epicenergy.enums.StatoFattura;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,6 +44,9 @@ public class Fatture {
 
     @Column(nullable = false, unique = true)
     private Integer numero;
+
+    @Enumerated(EnumType.STRING)
+    private StatoFattura stato;
 
     @ManyToOne
     private User user;
