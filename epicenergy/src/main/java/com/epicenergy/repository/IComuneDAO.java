@@ -11,4 +11,7 @@ public interface IComuneDAO extends CrudRepository<Comune, Long> {
     public Comune findByNomeAndProvSigla(String nome, String provSigla);
 
     public Comune findByNome(String nome);
+
+    @Query("SELECT c FROM Comune c ORDER BY RANDOM() LIMIT 1")
+    public Comune getRandomComune();
 }
