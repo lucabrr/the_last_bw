@@ -3,7 +3,8 @@ package com.epicenergy.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -11,42 +12,40 @@ import com.epicenergy.entity.User;
 
 public interface IPageable extends PagingAndSortingRepository<User, Long> {
 
-    // // Nome
+    // Nome
 
-    // @Query("SELECT u FROM User u ORDER BY u.name ASC")
-    // public List<User> findAllOrderByName(Pageable pageable);
+    @Query("SELECT u FROM User u ORDER BY u.name ASC")
+    public Page<User> findAllOrderByName(Pageable pageable);
 
-    // // Fatturato annuale
+    // Fatturato annuale
 
-    // @Query("SELECT u FROM User u ORDER BY u.fatturatoAnnuale DESC")
-    // public List<User> sortByFatturatoAnnuale(Pageable pageable);
+    @Query("SELECT u FROM User u ORDER BY u.fatturatoAnnuale DESC")
+    public Page<User> sortByFatturatoAnnuale(Pageable pageable);
 
-    // // Data di inserimento
+    // Data di inserimento
 
-    // @Query("SELECT u FROM User u ORDER BY u.dataInserimento DESC")
-    // public List<User> sortByDataInserimento(Pageable pageable);
+    @Query("SELECT u FROM User u ORDER BY u.dataInserimento DESC")
+    public Page<User> sortByDataInserimento(Pageable pageable);
 
-    // // Data di ultimo contatto
+    // Data di ultimo contatto
 
-    // @Query("SELECT u FROM User u ORDER BY u.dataUltimoContatto DESC")
-    // public List<User> sortByDataUltimoContatto(Pageable pageable);
+    @Query("SELECT u FROM User u ORDER BY u.dataUltimoContatto DESC")
+    public Page<User> sortByDataUltimoContatto(Pageable pageable);
 
-    // // Provincia della sede legale.
+    // Provincia della sede legale.
 
-    // @Query("SELECT u FROM User u ORDER BY u.indirizzo.comune.provincia ASC")
-    // public List<User> sortByIndirizzo(Pageable pageable);
+    @Query("SELECT u FROM User u ORDER BY u.indirizzo.comune.provincia ASC")
+    public Page<User> sortByIndirizzo(Pageable pageable);
 
-    // @Query("SELECT u FROM User u WHERE u.fatturatoAnnuale = :fatturato")
-    // public List<User> findByFatturatoAnnuale(Double fatturato, Pageable
-    // pageable);
+    @Query("SELECT u FROM User u WHERE u.fatturatoAnnuale = :fatturato")
+    public Page<User> findByFatturatoAnnuale(Double fatturato, Pageable pageable);
 
-    // @Query("SELECT u FROM User u WHERE u.dataInserimento = :data")
-    // public List<User> findByDataInserimento(LocalDate data, Pageable pageable);
+    @Query("SELECT u FROM User u WHERE u.dataInserimento = :data")
+    public Page<User> findByDataInserimento(LocalDate data, Pageable pageable);
 
-    // @Query("SELECT u FROM User u WHERE u.dataUltimoContatto = :data")
-    // public List<User> findByDataUltimoContatto(LocalDate data, Pageable
-    // pageable);
+    @Query("SELECT u FROM User u WHERE u.dataUltimoContatto = :data")
+    public Page<User> findByDataUltimoContatto(LocalDate data, Pageable pageable);
 
-    // public List<User> findByNameContaining(String nome, Pageable pageable);
+    public Page<User> findByNameContaining(String nome, Pageable pageable);
 
 }
