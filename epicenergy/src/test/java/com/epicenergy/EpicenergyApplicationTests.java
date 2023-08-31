@@ -48,54 +48,6 @@ class EpicenergyApplicationTests {
 	Indirizzo indirizzo = new Indirizzo();
 	Comune comune = new Comune();
 
-	@BeforeAll
-	public void beforeAll() {
-		System.out.println("..Before All..");
-		this.comune = com_repo.getRandomComune();
-	}
-
-	@Test
-	void saveIndirizzoTest() {
-		Faker fk = Faker.instance();
-
-		this.indirizzo = Indirizzo.builder().via(fk.address().streetAddress())
-				.civico(Integer.parseInt(fk.address().streetAddressNumber())).localita(fk.address().secondaryAddress())
-				.cap(fk.address().countryCode()).build();
-
-		this.indirizzo.setComune(this.comune);
-
-		this.ind_repo.save(this.indirizzo);
-		System.out.println(this.indirizzo.getVia());
-
-		assertEquals(indirizzo.getId(), this.ind_repo.findById(this.indirizzo.getId()).get().getId());
-	}
-
-	@Test
-	void registerTest() {
-		Faker fk = Faker.instance();
-
-		RegisterDto regData = new RegisterDto(fk.funnyName().name(), fk.name().lastName(), fk.name().username(),
-				fk.internet().emailAddress(), "qwerty", RagioneSociale.PRVT, null, fk.phoneNumber().cellPhone(),
-				null,
-				null, null,
-				null, null, null, this.indirizzo);
-
-		this.doAPICall("http://localhost:8080/api/auth/register", regData);
-
-		assertEquals(this.user.getId(), this.user_repo.findById(this.user.getId()).get().getId());
-	}
-
-	@AfterAll
-	public void afterAll() {
-		if (this.user.getId() != null && this.user_repo.existsById(this.user.getId())) {
-			this.user_repo.deleteById(this.user.getId());
-		}
-		if (this.indirizzo.getId() != null && this.ind_repo.existsById(this.indirizzo.getId())) {
-			this.ind_repo.deleteById(this.indirizzo.getId());
-		}
-		System.out.println("..After All..");
-	}
-
 	private void doAPICall(String endp, Object obj) {
 		try {
 			ObjectMapper objMap = new ObjectMapper();
@@ -113,7 +65,7 @@ class EpicenergyApplicationTests {
 				os.write(input, 0, input.length);
 			}
 
-			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				String inputLine;
 				StringBuffer res = new StringBuffer();
@@ -126,10 +78,59 @@ class EpicenergyApplicationTests {
 				ObjectMapper objectMapper = new ObjectMapper();
 				objectMapper.registerModule(new JavaTimeModule());
 				this.user = objectMapper.readValue(res.toString(), User.class);
-				System.out.println(this.user.toString());
 			}
+			connection.disconnect();
 		} catch (Exception ex) {
 			System.out.println("** ERROR ** " + ex.getMessage());
 		}
+	}
+
+	@BeforeAll
+	public void beforeAll() {
+		System.out.println("..Before All..");
+		this.comune = com_repo.getRandomComune();
+	}
+
+	@Test
+	void saveIndirizzoTest() {
+		Faker fk = Faker.instance();
+
+		this.indirizzo = Indirizzo.builder().via(fk.address().streetAddress())
+				.civico(Integer.parseInt(fk.address().streetAddressNumber())).localita(fk.address().secondaryAddress())
+				.cap(fk.address().countryCode()).build();
+
+		this.indirizzo.setComune(this.comune);
+
+		this.ind_repo.save(this.indirizzo);
+		System.out.println("Via: " + this.indirizzo.getVia() + " -- ID: " + this.indirizzo.getId());
+
+		assertEquals(indirizzo.getId(), this.ind_repo.findById(this.indirizzo.getId()).get().getId());
+	}
+
+	@Test
+	void registerTest() {
+		Faker fk = Faker.instance();
+
+		RegisterDto regData = new RegisterDto(fk.funnyName().name(), fk.name().lastName(), fk.name().username(),
+				fk.internet().emailAddress(), "qwerty", RagioneSociale.PRVT, null, fk.phoneNumber().cellPhone(),
+				null,
+				null, null,
+				null, null, null, this.indirizzo);
+
+		this.doAPICall("http://localhost:8080/api/auth/register", regData);
+		System.out.println("ID: " + this.user.getId() + " -- " + "Username: " + this.user.getUsername());
+
+		assertEquals(this.user.getId(), this.user_repo.findById(this.user.getId()).get().getId());
+	}
+
+	@AfterAll
+	public void afterAll() {
+		if (this.user.getId() != null && this.user_repo.existsById(this.user.getId())) {
+			this.user_repo.deleteById(this.user.getId());
+		}
+		if (this.indirizzo.getId() != null && this.ind_repo.existsById(this.indirizzo.getId())) {
+			this.ind_repo.deleteById(this.indirizzo.getId());
+		}
+		System.out.println("..After All..");
 	}
 }
