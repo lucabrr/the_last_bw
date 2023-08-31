@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicenergy.entity.User;
+import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.service.ClientiService;
 
 @RestController
@@ -79,15 +81,20 @@ public class ClientiController {
         return ResponseEntity.ok(svc.findByNameContaining(name, pageable));
     }
 
-    @PutMapping("/users/update/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User u) {
         User user = svc.updateUser(id, u);
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/users/delete/{id}")
+    @DeleteMapping("/users/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        return null;
+        if (svc.deleteUser(id)) {
+            return ResponseEntity.ok("User deleted succesfully");
+        } else {
+            throw new MyAPIException(HttpStatus.BAD_REQUEST, "User not found");
+        }
     }
 
 }

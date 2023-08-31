@@ -72,4 +72,12 @@ public class ClientiService {
         return this.clienti_repo.save(u);
     }
 
+    public boolean deleteUser(Long id) {
+        if (this.clienti_repo.existsById(id)) {
+            this.clienti_repo.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

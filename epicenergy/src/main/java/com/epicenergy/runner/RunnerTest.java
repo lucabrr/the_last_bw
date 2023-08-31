@@ -36,161 +36,161 @@ public class RunnerTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Running...");
 
-		rs.salvaProvinceNelDB();
-		rs.salvaComuniNelDB();
+		// rs.salvaProvinceNelDB();
+		// rs.salvaComuniNelDB();
 
 		// Crea 50 utenti con Java faker per test
-		for (int i = 0; i < 10; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder()
-					.via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder()
-					.name(fk.name().firstName())
-					.lastname(fk.name().lastName())
-					.username(fk.name().username())
-					.email(fk.internet().emailAddress())
-					.password("qwerty")
-					.ragioneSociale(RagioneSociale.PRVT)
-					.telefono(fk.phoneNumber().phoneNumber())
-					.indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// System.out.println("User " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder()
+		// .via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u = User.builder()
+		// .name(fk.name().firstName())
+		// .lastname(fk.name().lastName())
+		// .username(fk.name().username())
+		// .email(fk.internet().emailAddress())
+		// .password("qwerty")
+		// .ragioneSociale(RagioneSociale.PRVT)
+		// .telefono(fk.phoneNumber().phoneNumber())
+		// .indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 
-		for (int i = 0; i < 10; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder()
-					.fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
-					.dataInserimento(LocalDateTime.now())
-					.dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
-					.cognomeContatto(fk.name().lastName())
-					.emailContatto(fk.internet().emailAddress())
-					.nomeContatto(fk.name().firstName())
-					.partitaIva(fk.business().creditCardNumber())
-					.pec(fk.internet().emailAddress())
-					.telefonoContatto(fk.phoneNumber().phoneNumber())
-					.name(fk.name().firstName())
-					.lastname(fk.name().lastName())
-					.username(fk.name().username())
-					.email(fk.internet().emailAddress())
-					.password("qwerty")
-					.ragioneSociale(RagioneSociale.PA)
-					.telefono(fk.phoneNumber().phoneNumber())
-					.indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// System.out.println("P.A. " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u = User.builder()
+		// .fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
+		// .dataInserimento(LocalDateTime.now())
+		// .dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
+		// .cognomeContatto(fk.name().lastName())
+		// .emailContatto(fk.internet().emailAddress())
+		// .nomeContatto(fk.name().firstName())
+		// .partitaIva(fk.business().creditCardNumber())
+		// .pec(fk.internet().emailAddress())
+		// .telefonoContatto(fk.phoneNumber().phoneNumber())
+		// .name(fk.name().firstName())
+		// .lastname(fk.name().lastName())
+		// .username(fk.name().username())
+		// .email(fk.internet().emailAddress())
+		// .password("qwerty")
+		// .ragioneSociale(RagioneSociale.PA)
+		// .telefono(fk.phoneNumber().phoneNumber())
+		// .indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 
-		for (int i = 0; i < 10; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder()
-					.fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
-					.dataInserimento(LocalDateTime.now())
-					.dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
-					.cognomeContatto(fk.name().lastName())
-					.emailContatto(fk.internet().emailAddress())
-					.nomeContatto(fk.name().firstName())
-					.partitaIva(fk.business().creditCardNumber())
-					.pec(fk.internet().emailAddress())
-					.telefonoContatto(fk.phoneNumber().phoneNumber())
-					.name(fk.name().firstName())
-					.lastname(fk.name().lastName())
-					.username(fk.name().username())
-					.email(fk.internet().emailAddress())
-					.password("qwerty")
-					.ragioneSociale(RagioneSociale.SAS)
-					.telefono(fk.phoneNumber().phoneNumber())
-					.indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// System.out.println("S.A.S. " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u = User.builder()
+		// .fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
+		// .dataInserimento(LocalDateTime.now())
+		// .dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
+		// .cognomeContatto(fk.name().lastName())
+		// .emailContatto(fk.internet().emailAddress())
+		// .nomeContatto(fk.name().firstName())
+		// .partitaIva(fk.business().creditCardNumber())
+		// .pec(fk.internet().emailAddress())
+		// .telefonoContatto(fk.phoneNumber().phoneNumber())
+		// .name(fk.name().firstName())
+		// .lastname(fk.name().lastName())
+		// .username(fk.name().username())
+		// .email(fk.internet().emailAddress())
+		// .password("qwerty")
+		// .ragioneSociale(RagioneSociale.SAS)
+		// .telefono(fk.phoneNumber().phoneNumber())
+		// .indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 
-		for (int i = 0; i < 10; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder()
-					.fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
-					.dataInserimento(LocalDateTime.now())
-					.dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
-					.cognomeContatto(fk.name().lastName())
-					.emailContatto(fk.internet().emailAddress())
-					.nomeContatto(fk.name().firstName())
-					.partitaIva(fk.business().creditCardNumber())
-					.pec(fk.internet().emailAddress())
-					.telefonoContatto(fk.phoneNumber().phoneNumber())
-					.name(fk.name().firstName())
-					.lastname(fk.name().lastName())
-					.username(fk.name().username())
-					.email(fk.internet().emailAddress())
-					.password("qwerty")
-					.ragioneSociale(RagioneSociale.SPA)
-					.telefono(fk.phoneNumber().phoneNumber())
-					.indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// System.out.println("S.P.A. " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u = User.builder()
+		// .fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
+		// .dataInserimento(LocalDateTime.now())
+		// .dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
+		// .cognomeContatto(fk.name().lastName())
+		// .emailContatto(fk.internet().emailAddress())
+		// .nomeContatto(fk.name().firstName())
+		// .partitaIva(fk.business().creditCardNumber())
+		// .pec(fk.internet().emailAddress())
+		// .telefonoContatto(fk.phoneNumber().phoneNumber())
+		// .name(fk.name().firstName())
+		// .lastname(fk.name().lastName())
+		// .username(fk.name().username())
+		// .email(fk.internet().emailAddress())
+		// .password("qwerty")
+		// .ragioneSociale(RagioneSociale.SPA)
+		// .telefono(fk.phoneNumber().phoneNumber())
+		// .indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 
-		for (int i = 0; i < 10; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder()
-					.fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
-					.dataInserimento(LocalDateTime.now())
-					.dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
-					.cognomeContatto(fk.name().lastName())
-					.emailContatto(fk.internet().emailAddress())
-					.nomeContatto(fk.name().firstName())
-					.partitaIva(fk.business().creditCardNumber())
-					.pec(fk.internet().emailAddress())
-					.telefonoContatto(fk.phoneNumber().phoneNumber())
-					.name(fk.name().firstName())
-					.lastname(fk.name().lastName())
-					.username(fk.name().username())
-					.email(fk.internet().emailAddress())
-					.password("qwerty")
-					.ragioneSociale(RagioneSociale.SRL)
-					.telefono(fk.phoneNumber().phoneNumber())
-					.indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// System.out.println("S.R.L. " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u = User.builder()
+		// .fatturatoAnnuale(fk.number().randomDouble(2, 10000, 10000000))
+		// .dataInserimento(LocalDateTime.now())
+		// .dataUltimoContatto(fk.date().past(1825, 10, TimeUnit.DAYS))
+		// .cognomeContatto(fk.name().lastName())
+		// .emailContatto(fk.internet().emailAddress())
+		// .nomeContatto(fk.name().firstName())
+		// .partitaIva(fk.business().creditCardNumber())
+		// .pec(fk.internet().emailAddress())
+		// .telefonoContatto(fk.phoneNumber().phoneNumber())
+		// .name(fk.name().firstName())
+		// .lastname(fk.name().lastName())
+		// .username(fk.name().username())
+		// .email(fk.internet().emailAddress())
+		// .password("qwerty")
+		// .ragioneSociale(RagioneSociale.SRL)
+		// .telefono(fk.phoneNumber().phoneNumber())
+		// .indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 
 	}
 }
