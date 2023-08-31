@@ -1,5 +1,7 @@
 package com.epicenergy.service;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +30,41 @@ public class ClientiService {
 
     public Page<User> getClientiPaginati(Pageable pageable) {
         return this.page_repo.findAll(pageable);
+    }
+
+    public Page<User> sortByFatturato(Pageable pageable) {
+        return this.page_repo.sortByFatturatoAnnuale(pageable);
+    }
+
+    public Page<User> orderByName(Pageable pageable) {
+        return this.page_repo.findAllOrderByName(pageable);
+    }
+
+    public Page<User> sortByDataInserimento(Pageable pageable) {
+        return this.page_repo.sortByDataInserimento(pageable);
+    }
+
+    public Page<User> sortByUltimoContatto(Pageable pageable) {
+        return this.page_repo.sortByDataUltimoContatto(pageable);
+    }
+
+    public Page<User> sortByIndirizzo(Pageable pageable) {
+        return this.page_repo.sortByIndirizzo(pageable);
+    }
+
+    public Page<User> findByFatturatoAnnuale(Double fatturato, Double fatturato2, Pageable pageable) {
+        return this.page_repo.findByFatturatoAnnuale(fatturato, fatturato2, pageable);
+    }
+
+    public Page<User> findByDataInserimento(LocalDate data, Pageable pageable) {
+        return this.page_repo.findByDataInserimento(data, pageable);
+    }
+
+    public Page<User> findByDataUltimoContatto(LocalDate data, Pageable pageable) {
+        return this.page_repo.findByDataUltimoContatto(data, pageable);
+    }
+
+    public Page<User> findByNameContaining(String nome, Pageable pageable) {
+        return this.page_repo.findByNameContaining(nome, pageable);
     }
 }

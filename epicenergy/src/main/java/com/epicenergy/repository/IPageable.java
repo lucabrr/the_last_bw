@@ -31,8 +31,8 @@ public interface IPageable extends PagingAndSortingRepository<User, Long> {
     @Query("SELECT u FROM User u ORDER BY u.indirizzo.comune.provincia ASC")
     public Page<User> sortByIndirizzo(Pageable pageable);
 
-    @Query("SELECT u FROM User u WHERE u.fatturatoAnnuale = :fatturato")
-    public Page<User> findByFatturatoAnnuale(Double fatturato, Pageable pageable);
+    @Query("SELECT u FROM User u WHERE u.fatturatoAnnuale BETWEEN :fatturato AND :fatturato2")
+    public Page<User> findByFatturatoAnnuale(Double fatturato, Double fatturato2, Pageable pageable);
 
     @Query("SELECT u FROM User u WHERE u.dataInserimento = :data")
     public Page<User> findByDataInserimento(LocalDate data, Pageable pageable);
