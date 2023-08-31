@@ -68,4 +68,8 @@ public class ClientiService {
         return this.page_repo.findByNameContaining(nome.toLowerCase(), pageable);
     }
 
+    public User updateUser(Long id, User u) {
+        return this.clienti_repo.save(u);
+    }
+
 }
