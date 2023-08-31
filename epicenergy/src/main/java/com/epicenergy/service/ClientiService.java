@@ -65,6 +65,7 @@ public class ClientiService {
     }
 
     public Page<User> findByNameContaining(String nome, Pageable pageable) {
-        return this.page_repo.findByNameContaining(nome, pageable);
+        return this.page_repo.findByNameContaining(nome.toLowerCase(), pageable);
     }
+
 }

@@ -70,7 +70,7 @@ public class ClientiController {
         return ResponseEntity.ok(svc.findByDataInserimento(LocalDate.parse(data), pageable));
     }
 
-    @GetMapping("/findname/containing/{name}")
+    @GetMapping("/findname/containing")
     public ResponseEntity<Page<User>> findByNameContaining(@RequestParam String name, Pageable pageable) {
         return ResponseEntity.ok(svc.findByNameContaining(name, pageable));
     }

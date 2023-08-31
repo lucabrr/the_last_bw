@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.epicenergy.entity.User;
 
@@ -40,6 +41,7 @@ public interface IPageable extends PagingAndSortingRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.dataUltimoContatto = :data")
     public Page<User> findByDataUltimoContatto(LocalDate data, Pageable pageable);
 
+    @Query("SELECT u FROM User u WHERE u.name LIKE %:nome%")
     public Page<User> findByNameContaining(String nome, Pageable pageable);
 
 }

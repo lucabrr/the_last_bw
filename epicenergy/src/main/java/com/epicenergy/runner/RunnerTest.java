@@ -37,21 +37,22 @@ public class RunnerTest implements CommandLineRunner {
 		rs.salvaComuniNelDB();
 
 		// Crea 50 utenti con Java faker per test
-		for (int i = 0; i < 50; i++) {
-			System.out.println("User " + i);
-			Faker fk = Faker.instance();
-			Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
-					.civico(Integer.parseInt(fk.address().streetAddressNumber()))
-					.localita(fk.address().secondaryAddress())
-					.cap(fk.address().countryCode()).build();
-			Comune com = this.com_repo.getRandomComune();
-			ind.setComune(com);
-			ind_repo.save(ind);
-			User u = User.builder().name(fk.name().firstName()).lastname(fk.name().lastName())
-					.username(fk.name().username()).email(fk.internet().emailAddress()).password("qwerty")
-					.ragioneSociale(RagioneSociale.PRVT).telefono(fk.phoneNumber().phoneNumber()).indirizzo(ind)
-					.build();
-			this.user_repo.save(u);
-		}
+		// for (int i = 0; i < 50; i++) {
+		// System.out.println("User " + i);
+		// Faker fk = Faker.instance();
+		// Indirizzo ind = Indirizzo.builder().via(fk.address().streetAddress())
+		// .civico(Integer.parseInt(fk.address().streetAddressNumber()))
+		// .localita(fk.address().secondaryAddress())
+		// .cap(fk.address().countryCode()).build();
+		// Comune com = this.com_repo.getRandomComune();
+		// ind.setComune(com);
+		// ind_repo.save(ind);
+		// User u =
+		// User.builder().name(fk.name().firstName()).lastname(fk.name().lastName())
+		// .username(fk.name().username()).email(fk.internet().emailAddress()).password("qwerty")
+		// .ragioneSociale(RagioneSociale.PRVT).telefono(fk.phoneNumber().phoneNumber()).indirizzo(ind)
+		// .build();
+		// this.user_repo.save(u);
+		// }
 	}
 }
