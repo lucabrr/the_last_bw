@@ -2,7 +2,6 @@ package com.epicenergy.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class FattureController {
     }
 
     @GetMapping("/fatture")
-    public ResponseEntity<Fatture> getAllFatture() {
+    public ResponseEntity<Iterable<Fatture>> getAllFatture() {
         return ResponseEntity.ok(fs.getAllFatture());
     }
 
@@ -62,24 +61,23 @@ public class FattureController {
         return ResponseEntity.ok(fattura);
     }
 
-    @GetMapping("/fatture/{stato}")
+    @GetMapping("/fatture/stato/{stato}")
     public ResponseEntity<?> getByStato(@PathVariable StatoFattura stato) {
         return ResponseEntity.ok(fs.getByStato(stato));
     }
 
-    @GetMapping("/fatture/{id}")
-    public ResponseEntity <List<Fatture>> getByUser(@PathVariable Long id){
+    @GetMapping("/fatture/byuser/{id}")
+    public ResponseEntity<List<Fatture>> getByUser(@PathVariable Long id) {
         return ResponseEntity.ok(fs.getByUser(id));
     }
-    
 
-    @GetMapping("/fatture")
+    @GetMapping("/fatture/bydata")
     public ResponseEntity<?> getByDataBetween(@RequestParam String start, String end) {
         return ResponseEntity.ok(fs.getByDataBetween(LocalDate.parse(start), LocalDate.parse(end)));
     }
 
-    @GetMapping("/fatture")
-    public ResponseEntity<?> getByImportoBetween(@RequestParam BigDecimal start, BigDecimal end) {
+    @GetMapping("/fatture/byimporto")
+    public ResponseEntity<?> getByImportoBetween(@RequestParam BigDecimal start, @RequestParam BigDecimal end) {
         return ResponseEntity.ok(fs.getByImportoBetween(start, end));
     }
 

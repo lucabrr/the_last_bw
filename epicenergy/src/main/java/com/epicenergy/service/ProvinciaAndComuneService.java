@@ -18,8 +18,6 @@ import com.epicenergy.entity.Provincia;
 import com.epicenergy.repository.IComuneDAO;
 import com.epicenergy.repository.IProvinciaDao;
 
-import jakarta.transaction.TransactionSynchronizationRegistry;
-
 @Service
 public class ProvinciaAndComuneService {
 	@Autowired

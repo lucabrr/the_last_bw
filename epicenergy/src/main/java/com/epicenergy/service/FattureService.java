@@ -6,14 +6,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.epicenergy.entity.Fatture;
-import com.epicenergy.entity.User;
 import com.epicenergy.enums.StatoFattura;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.repository.IFatture;
 import com.epicenergy.repository.UserRepository;
 
+@Service
 public class FattureService {
 
     @Autowired
@@ -37,8 +38,8 @@ public class FattureService {
         }
     }
 
-    public Fatture getAllFatture() {
-        return (Fatture) fattureRepo.findAll();
+    public Iterable<Fatture> getAllFatture() {
+        return fattureRepo.findAll();
     }
 
     public boolean deleteFattura(Long id) {

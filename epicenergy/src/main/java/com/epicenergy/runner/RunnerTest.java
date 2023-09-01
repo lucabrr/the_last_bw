@@ -1,21 +1,27 @@
 package com.epicenergy.runner;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import com.epicenergy.entity.Comune;
+import com.epicenergy.entity.Fatture;
 import com.epicenergy.entity.Indirizzo;
 import com.epicenergy.entity.User;
 import com.epicenergy.enums.RagioneSociale;
+import com.epicenergy.enums.StatoFattura;
 import com.epicenergy.payload.RegisterDto;
 import com.epicenergy.repository.IComuneDAO;
+import com.epicenergy.repository.IFatture;
 import com.epicenergy.repository.IndirizzoRepository;
 import com.epicenergy.repository.UserRepository;
 import com.epicenergy.service.AuthServiceImpl;
+import com.epicenergy.service.FattureService;
 import com.epicenergy.service.ProvinciaAndComuneService;
 import com.github.javafaker.Faker;
 
@@ -31,6 +37,8 @@ public class RunnerTest implements CommandLineRunner {
 	UserRepository user_repo;
 	@Autowired
 	IndirizzoRepository ind_repo;
+	@Autowired
+	IFatture fatt_repo;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -192,5 +200,20 @@ public class RunnerTest implements CommandLineRunner {
 		// this.user_repo.save(u);
 		// }
 
+		// Crea 50 fatture
+		// for (int i = 0; i < 50; i++) {
+		// Faker fk = Faker.instance();
+		// Fatture fatt = Fatture.builder().anno(2023).data(LocalDateTime.now())
+		// .importo(BigDecimal.valueOf(fk.number().randomDouble(2, 100, 10000)))
+		// .numero(i + LocalDateTime.now().getYear() +
+		// LocalDateTime.now().getDayOfYear()
+		// + LocalDateTime.now().getDayOfMonth() + LocalDateTime.now().getHour()
+		// + LocalDateTime.now().getMinute() + LocalDateTime.now().getSecond()
+		// + LocalDateTime.now().getNano())
+		// .stato(StatoFattura.EMESSA).user(user_repo.getRandomUser())
+		// .build();
+		// fatt_repo.save(fatt);
+		// System.out.println(("Salvata fattura " + fatt.getId()));
+		// }
 	}
 }
