@@ -1,10 +1,15 @@
 package com.epicenergy.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import com.epicenergy.entity.Fatture;
 import com.epicenergy.entity.User;
+import com.epicenergy.enums.StatoFattura;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.repository.IFatture;
 
@@ -29,6 +34,10 @@ public class FattureService {
         }
     }
 
+    public Fatture getAllFatture() {
+        return (Fatture) fattureRepo.findAll();
+    }
+
     public boolean deleteFattura(Long id) {
         if (this.fattureRepo.existsById(id)) {
             this.fattureRepo.deleteById(id);
@@ -40,6 +49,22 @@ public class FattureService {
 
     public Fatture updateFattura(Long id, Fatture f) {
         return this.fattureRepo.save(f);
+    }
+
+    public List<Fatture> getByUser(User u) {
+        return this.fattureRepo.findByUser(u);
+    }
+
+    public List<Fatture> getByStato(StatoFattura stato) {
+        return this.fattureRepo.findByStato(stato);
+    }
+
+    public List<Fatture> getByDataBetween(LocalDate start, LocalDate end) {
+        return this.fattureRepo.findByDataBetween(start, end);
+    }
+
+    public List<Fatture> getByImportoBetween(BigDecimal start, BigDecimal end) {
+        return this.fattureRepo.findByImportoBetween(start, end);
     }
 
 }
