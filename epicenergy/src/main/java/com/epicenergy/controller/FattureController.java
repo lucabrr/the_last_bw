@@ -1,5 +1,10 @@
 package com.epicenergy.controller;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epicenergy.entity.Fatture;
+import com.epicenergy.enums.StatoFattura;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.repository.IFatture;
 import com.epicenergy.service.FattureService;
@@ -54,4 +61,26 @@ public class FattureController {
         Fatture fattura = fs.updateFattura(id, f);
         return ResponseEntity.ok(fattura);
     }
+
+    @GetMapping("/fatture/{stato}")
+    public ResponseEntity<?> getByStato(@PathVariable StatoFattura stato) {
+        return ResponseEntity.ok(fs.getByStato(stato));
+    }
+
+    @GetMapping("/fatture/{id}")
+    public ResponseEntity <List<Fatture>> getByUser(@PathVariable Long id){
+        return ResponseEntity.ok(fs.getByUser(id));
+    }
+    
+
+    @GetMapping("/fatture")
+    public ResponseEntity<?> getByDataBetween(@RequestParam String start, String end) {
+        return ResponseEntity.ok(fs.getByDataBetween(LocalDate.parse(start), LocalDate.parse(end)));
+    }
+
+    @GetMapping("/fatture")
+    public ResponseEntity<?> getByImportoBetween(@RequestParam BigDecimal start, BigDecimal end) {
+        return ResponseEntity.ok(fs.getByImportoBetween(start, end));
+    }
+
 }

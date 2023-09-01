@@ -1,7 +1,7 @@
 package com.epicenergy.repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -16,7 +16,7 @@ public interface IFatture extends CrudRepository<Fatture, Long> {
 
     public List<Fatture> findByStato(StatoFattura stato);
 
-    public List<Fatture> findByDataBetween(LocalDateTime start, LocalDateTime end);
+    public List<Fatture> findByDataBetween(LocalDate start, LocalDate end);
 
     public List<Fatture> findByImportoBetween(BigDecimal start, BigDecimal end);
 

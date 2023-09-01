@@ -12,11 +12,14 @@ import com.epicenergy.entity.User;
 import com.epicenergy.enums.StatoFattura;
 import com.epicenergy.exception.MyAPIException;
 import com.epicenergy.repository.IFatture;
+import com.epicenergy.repository.UserRepository;
 
 public class FattureService {
 
     @Autowired
     IFatture fattureRepo;
+    @Autowired
+    UserRepository userRepo;
 
     public void salvaFattura(Fatture f) {
         try {
@@ -51,8 +54,8 @@ public class FattureService {
         return this.fattureRepo.save(f);
     }
 
-    public List<Fatture> getByUser(User u) {
-        return this.fattureRepo.findByUser(u);
+    public List<Fatture> getByUser(Long id) {
+        return this.fattureRepo.findByUser(userRepo.findById(id).get());
     }
 
     public List<Fatture> getByStato(StatoFattura stato) {
